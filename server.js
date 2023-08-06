@@ -50,7 +50,7 @@ app.post('/product', async(req, res) => {
 });
 
 
-//update a product
+//update a user
 app.put('/products/:id', async(req, res) => {
     try {
         const {id} = req.params;
@@ -67,7 +67,24 @@ app.put('/products/:id', async(req, res) => {
     }
 })
 
-//de
+//delete a user
+
+
+app.delete('/products/:id', async(req, res) =>{
+    try {
+        const {id} = req.params;
+        const product = await Product.findByIdAndDelete(id);
+        if(!product){
+            return res.status(404).json({message: `cannot find any User with ID ${id}`})
+        }
+        res.status(200).json(product);
+        
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
+
 
 mongoose
   .connect(
